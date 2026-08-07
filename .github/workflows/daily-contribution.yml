@@ -2,7 +2,8 @@ name: Daily contribution
 
 on:
   schedule:
-    - cron: "10 15 * * *"
+    # 10:17 Asia/Shanghai (UTC+8). Avoids GitHub Actions' hourly peak.
+    - cron: "17 2 * * *"
   workflow_dispatch:
 
 permissions:
@@ -11,23 +12,44 @@ permissions:
 jobs:
   daily-log:
     runs-on: ubuntu-latest
+    env:
+      CO_AUTHOR_NAME: Xvvln
+      CO_AUTHOR_EMAIL: 180168103+Xvvln@users.noreply.github.com
+      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Append daily log
+      - name: Create daily records and push
+        shell: bash
         run: |
-          mkdir -p logs
-          echo "- $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S %Z') daily check-in" >> logs/daily.md
+          set -euo pipefail
+          today="$(TZ=Asia/Shanghai date +%F)"
+          year="${today%%-*}"
+          log_file="logs/${year}/${today}.md"
+          topics=(
+            "automated repository health record"
+            "scheduled activity checkpoint"
+            "daily maintenance note"
+            "workflow activity record"
+          )
+          record_total=$((RANDOM % 10 + 1))
+          owner_id="$(gh api "/users/${GITHUB_REPOSITORY_OWNER}" --jq .id)"
 
-      - name: Commit and push
-        run: |
-          git config user.name "ayxwi"
-          git config user.email "274959179+xwil1@users.noreply.github.com"
-          git add logs/daily.md
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-            exit 0
-          fi
-          git commit -m "chore: daily log"
-          git push
+          git config user.name "${GITHUB_REPOSITORY_OWNER}"
+          git config user.email "${owner_id}+${GITHUB_REPOSITORY_OWNER}@users.noreply.github.com"
+          mkdir -p "$(dirname "${log_file}")"
+
+          for record_index in $(seq 1 "${record_total}"); do
+            timestamp="$(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S %Z')"
+            topic="${topics[RANDOM % ${#topics[@]}]}"
+            printf -- '- %s | record %d/%d | %s\n' \
+              "${timestamp}" "${record_index}" "${record_total}" "${topic}" >> "${log_file}"
+            git add "${log_file}"
+            git commit \
+              -m "chore(log): record ${today} ${record_index}/${record_total}" \
+              -m "Co-authored-by: ${CO_AUTHOR_NAME} <${CO_AUTHOR_EMAIL}>"
+          done
+
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          printf 'Created %d daily record commit(s).\n' "${record_total}"
