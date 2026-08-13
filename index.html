@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="My Home is a quiet personal homepage for focus, notes, and daily rhythm."
+    />
+    <title>My Home — a place to return to</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232c5044'/%3E%3Ctext x='32' y='40' fill='white' font-family='Georgia, serif' font-size='22' text-anchor='middle'%3EMH%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="aurora aurora-one" aria-hidden="true"></div>
+    <div class="aurora aurora-two" aria-hidden="true"></div>
+
+    <main class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="#top" aria-label="My Home, back to top">
+          <span class="brand-mark">MH</span>
+          <span>my home</span>
+        </a>
+        <p class="home-status"><span></span> home is open</p>
+      </header>
+
+      <section class="hero" id="top" aria-labelledby="greeting">
+        <p class="eyebrow" id="today-label">BEIJING TIME</p>
+        <h1 id="greeting">Welcome home.</h1>
+        <p class="hero-copy">
+          A little corner for the things worth returning to — one clear task,
+          one useful thought, and enough room to breathe.
+        </p>
+      </section>
+
+      <section class="dashboard" aria-label="My Home dashboard">
+        <article class="card today-card">
+          <div class="card-heading">
+            <div>
+              <p class="eyebrow">TODAY</p>
+              <h2 id="date-display">Loading today…</h2>
+            </div>
+            <span class="sun-icon" aria-hidden="true">✦</span>
+          </div>
+
+          <div class="focus-line">
+            <span>Gentle progress</span>
+            <strong id="progress-label">0 / 3</strong>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <span id="progress-bar"></span>
+          </div>
+
+          <ul class="task-list" aria-label="Today’s checklist">
+            <li>
+              <label>
+                <input type="checkbox" data-task="focus" />
+                <span>Protect one focused hour</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-task="learn" />
+                <span>Learn something small and useful</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-task="close" />
+                <span>Close the day with a clean desk</span>
+              </label>
+            </li>
+          </ul>
+        </article>
+
+        <article class="card note-card">
+          <div class="card-heading">
+            <div>
+              <p class="eyebrow">A THOUGHT TO KEEP</p>
+              <h2>Scratchpad</h2>
+            </div>
+            <span class="note-icon" aria-hidden="true">⌁</span>
+          </div>
+          <label class="sr-only" for="scratchpad">Write a note</label>
+          <textarea
+            id="scratchpad"
+            rows="6"
+            maxlength="500"
+            placeholder="Write down the next useful thought…"
+          ></textarea>
+          <div class="note-footer">
+            <span id="save-status" role="status">Saved on this device</span>
+            <button class="text-button" id="clear-note" type="button">Clear</button>
+          </div>
+        </article>
+
+        <article class="card rooms-card">
+          <div class="card-heading">
+            <div>
+              <p class="eyebrow">ROOMS</p>
+              <h2>Make space for it</h2>
+            </div>
+          </div>
+          <nav class="room-list" aria-label="Personal spaces">
+            <a href="#focus-room">
+              <span class="room-symbol coral">01</span>
+              <span><strong>Focus</strong><small>One thing at a time</small></span>
+              <b aria-hidden="true">↗</b>
+            </a>
+            <a href="#ideas-room">
+              <span class="room-symbol blue">02</span>
+              <span><strong>Ideas</strong><small>Keep sparks within reach</small></span>
+              <b aria-hidden="true">↗</b>
+            </a>
+            <a href="#library-room">
+              <span class="room-symbol gold">03</span>
+              <span><strong>Library</strong><small>Read, save, revisit</small></span>
+              <b aria-hidden="true">↗</b>
+            </a>
+          </nav>
+        </article>
+
+        <article class="card rhythm-card">
+          <div class="card-heading">
+            <div>
+              <p class="eyebrow">WEEKLY RHYTHM</p>
+              <h2>A little, often</h2>
+            </div>
+            <span class="week-total">7 days</span>
+          </div>
+          <div class="week-bars" role="img" aria-label="A seven-day activity rhythm">
+            <span style="--height: 42%"><i>M</i></span>
+            <span style="--height: 70%"><i>T</i></span>
+            <span style="--height: 56%"><i>W</i></span>
+            <span style="--height: 84%"><i>T</i></span>
+            <span style="--height: 64%"><i>F</i></span>
+            <span style="--height: 34%"><i>S</i></span>
+            <span class="is-today" style="--height: 78%"><i>S</i></span>
+          </div>
+          <p class="rhythm-copy">
+            Consistency does not need to be loud to be real.
+          </p>
+        </article>
+
+        <article class="card closing-card">
+          <div>
+            <p class="eyebrow">HOME RULE</p>
+            <h2>Start small. Stay close.</h2>
+            <p>
+              A home does not need to hold everything. It only needs to make
+              the next good thing easier to find.
+            </p>
+          </div>
+          <span class="home-orbit" aria-hidden="true"></span>
+        </article>
+      </section>
+
+      <section class="visually-hidden" aria-label="Room descriptions">
+        <p id="focus-room">Focus is your room for the next important task.</p>
+        <p id="ideas-room">Ideas is your room for notes worth developing.</p>
+        <p id="library-room">Library is your room for useful things to revisit.</p>
+      </section>
+
+      <footer class="site-footer">
+        <p>Made for a quieter kind of momentum.</p>
+        <a href="#top">Back to top ↑</a>
+      </footer>
+    </main>
+  </body>
+</html>
